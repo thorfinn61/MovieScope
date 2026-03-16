@@ -5,13 +5,16 @@ import { Pagination2 } from "@/components/ui/Pagination2";
 import { Metadata } from "next";
 
 type Props = {
-  params: { id: string };
-  searchParams?: { page?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function GenreMoviesPage(props: any) {
-  const currentPage = Number(props.searchParams?.page) || 1;
-  const id = props.params.id;
+export default async function GenreMoviesPage(props: Props) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
+
+  const currentPage = Number(searchParams?.page) || 1;
+  const id = params.id;
 
   const movies = await movieService.getMoviesByGenre(id, currentPage);
   const genre = await movieService.getGenreById(id);

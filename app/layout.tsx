@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Navbar from "./components/layouts/Navbar";
 import Footer from "./components/layouts/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "MovieScope - Découvrez votre prochain film",
+  description:
+    "MovieScope est une application web moderne de découverte de films...",
+};
 
 export default function RootLayout({
   children,
@@ -20,9 +27,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-export const metadata = {
-  title: "MovieScope - Découvrez votre prochain film",
-  description:
-    "MovieScope est une application web moderne de découverte de films...",
-};

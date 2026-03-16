@@ -4,8 +4,13 @@ import { Movie } from "../types/movie";
 import Pagination from "@/components/ui/Pagination";
 import ScrollToTop from "@/components/features/ScrollToTop";
 
-export default async function TopRated(props: any) {
-  const currentPage = Number(props.searchParams?.page) || 1;
+type Props = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export default async function TopRated(props: Props) {
+  const searchParams = await props.searchParams;
+  const currentPage = Number(searchParams?.page) || 1;
   const moviesPerPage = 20;
 
   const page = await movieService.getTopRated(currentPage);

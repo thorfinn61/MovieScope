@@ -16,8 +16,13 @@ function formatBudget(amount: number | null | undefined): string {
   return `${(amount / 1000000).toFixed(1)}M $`;
 }
 
-export default async function MovieDetail(props: any) {
-  const id = props.params.id;
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function MovieDetail(props: Props) {
+  const params = await props.params;
+  const id = params.id;
   const [movie, credits, videos, watchProviders] = await Promise.all([
     movieService.getMovieDetails(id),
     movieService.getMovieCredits(id),

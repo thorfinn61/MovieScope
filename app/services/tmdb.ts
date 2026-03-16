@@ -3,14 +3,16 @@ const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
 export const getTrendingMovies = async () => {
   const response = await fetch(
-    `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
+    `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`,
+    { next: { revalidate: 3600 } }
   );
   return response.json();
 };
 
 export const getMovieDetails = async (movieId: string) => {
   const response = await fetch(
-    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`
+    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`,
+    { next: { revalidate: 3600 } }
   );
   return response.json();
 };
@@ -20,7 +22,8 @@ export async function fetchFromTMDB(endpoint: string) {
     const separator = endpoint.includes("?") ? "&" : "?";
 
     const response = await fetch(
-      `${BASE_URL}${endpoint}${separator}api_key=${API_KEY}&language=fr-FR`
+      `${BASE_URL}${endpoint}${separator}api_key=${API_KEY}&language=fr-FR`,
+      { next: { revalidate: 3600 } }
     );
 
     if (!response.ok) {
@@ -70,7 +73,8 @@ export const movieService = {
     ),
   getGenreById: async (id: string) => {
     const genres = await fetch(
-      `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+      `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=fr-FR`,
+      { next: { revalidate: 3600 } }
     ).then((res) => res.json());
     return genres.genres.find((genre: any) => genre.id.toString() === id);
   },
